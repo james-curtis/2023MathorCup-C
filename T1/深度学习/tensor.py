@@ -56,6 +56,10 @@ else:
     print('重新训练模型')
 
     # 定义模型
+    '''
+    这里不应该使用全连接
+    应该使用LSTM
+    '''
     model = tf.keras.Sequential([
         tf.keras.layers.Dense(256, activation='relu', input_shape=(X.shape[1],)),
         tf.keras.layers.Dense(256 * 2, activation='relu'),
