@@ -11,6 +11,7 @@ cpu = tf.config.list_physical_devices("CPU")
 tf.config.set_visible_devices(cpu)
 print(tf.config.list_logical_devices())
 
+
 # session_conf = tf.compat.v1.ConfigProto(intra_op_parallelism_threads=32, inter_op_parallelism_threads=32)
 # sess = tf.compat.v1.Session(graph=tf.compat.v1.get_default_graph(), config=session_conf)
 # K.set_session(sess)
@@ -28,6 +29,8 @@ def getxy():
     df['日期'] = df['日期'] - df['日期'].min()
     df['日期'] = df['日期'].apply(lambda x: x.days)
     return df.drop(targetKey, axis=1), df[targetKey]
+
+
 forceRetrain = True
 
 modelPath = 'model1.h5'
@@ -69,10 +72,11 @@ else:
         return tf.reduce_mean(tf.cast(diff <= threshold, tf.float32))  # 统计正确分类的样本数占总样本数的比例
 
 
+    metrics = 'mae'
     # 编译模型
     model.compile(optimizer='adam',
                   loss='mse',
-                  metrics='mae'
+                  metrics=metrics
                   )
 
     # 训练模型
@@ -81,8 +85,9 @@ else:
     # 绘制学习曲线
     train_loss = history.history['loss']
     val_loss = history.history['val_loss']
-    train_acc = history.history['accuracy']
-    val_acc = history.history['val_accuracy']
+    if metrics:
+        train_acc = history.history[metrics]
+        val_acc = history.history[f'val_{metrics}']
     epochs = range(1, len(train_loss) + 1)
 
     plt.figure(figsize=(12, 4))
@@ -95,15 +100,16 @@ else:
     plt.ylabel('Loss')
     plt.legend()
 
-    plt.subplot(1, 2, 2)
-    plt.plot(epochs, train_acc, 'b-', label='Training acc')
-    plt.plot(epochs, val_acc, 'r-', label='Validation acc')
-    plt.title('Training and validation accuracy')
-    plt.xlabel('Epochs')
-    plt.ylabel('Accuracy')
-    plt.legend()
-    plt.savefig('Training and validation loss accuracy.svg')
-    plt.show()
+    if metrics:
+        plt.subplot(1, 2, 2)
+        plt.plot(epochs, train_acc, 'b-', label='Training acc')
+        plt.plot(epochs, val_acc, 'r-', label='Validation acc')
+        plt.title('Training and validation accuracy')
+        plt.xlabel('Epochs')
+        plt.ylabel('Accuracy')
+        plt.legend()
+        plt.savefig('Training and validation loss accuracy.svg')
+        plt.show()
 
     # 可视化训练和测试误差
     plt.plot(history.history['loss'])
