@@ -50,7 +50,7 @@ sns.set(font='SimHei', font_scale=1.2, style='whitegrid', palette=palette)  # �
 
 rawData = pd.read_excel('../../../原始数据/附件1：物流网络历史货量数据.xlsx')
 
-filterSize = 10
+filterSize = 5
 
 
 def getxy():
@@ -155,7 +155,7 @@ if not os.path.exists(modelPath):
     metricsName = metrics.__name__
     model.compile(loss='mse', optimizer='adam', metrics=[metrics])
     # epochs=3000
-    history = model.fit(trainX, trainY, validation_data=(testX, testY), epochs=200, batch_size=5000)
+    history = model.fit(trainX, trainY, validation_data=(testX, testY), epochs=100, batch_size=5000)
     model.save(modelPath)
 
     # 绘制学习曲线
@@ -238,11 +238,11 @@ print('mape', mean_absolute_percentage_error(np.exp(trainY), np.exp(y_pred)))
 '''
 敏感性分析
 '''
-explainerData = np.copy(trainX)
-np.random.shuffle(trainX)
-explainerData = explainerData[:1000]
-explainer = shap.DeepExplainer(model, explainerData)
-shap_values = explainer.shap_values(explainerData)
+# explainerData = np.copy(trainX)
+# np.random.shuffle(trainX)
+# explainerData = explainerData[:1000]
+# explainer = shap.DeepExplainer(model, explainerData)
+# shap_values = explainer.shap_values(explainerData)
 
 # plt.figure(figsize=(8, 6))
 # shap.plots.waterfall(shap_values[0][:, 0, :], show=False)
@@ -256,8 +256,9 @@ shap_values = explainer.shap_values(explainerData)
 # plt.savefig('灵敏度条形图.svg')
 # plt.show()
 
-plt.figure(figsize=(16, 9))
-shap.summary_plot(shap_values[0][:, 0, :], explainerData[:][:, 0, :], data.columns, show=False, )
-plt.tight_layout()
-plt.savefig('灵敏度蜂群图.svg')
-plt.show()
+
+# plt.figure(figsize=(16, 9))
+# shap.summary_plot(shap_values[0][:, 0, :], explainerData[:][:, 0, :], data.columns, show=False, )
+# plt.tight_layout()
+# plt.savefig('灵敏度蜂群图.svg')
+# plt.show()
