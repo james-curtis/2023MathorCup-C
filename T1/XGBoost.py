@@ -33,17 +33,22 @@ def getxy():
     targetKey = '货量'
     # 对场地进行编码
 
-    df = pd.read_excel('../原始数据/附件1：物流网络历史货量数据.xlsx')
+    data = pd.read_excel('../原始数据/附件1：物流网络历史货量数据.xlsx')
+
+    df = data[(data['场地1'] == 'DC14') & (data['场地2'] == 'DC10')]
+    df.reset_index(inplace=True)
+
     df['场地1'] = df['场地1'].str.replace('DC', '')
     df['场地1'] = df['场地1'].astype('int64')
     df['场地2'] = df['场地2'].str.replace('DC', '')
     df['场地2'] = df['场地2'].astype('int64')
+    df.drop('场地1', axis=1, inplace=True)
+    df.drop('场地2', axis=1, inplace=True)
 
     df['日期'] = pd.to_datetime(df['日期'])
     df['日期'] = df['日期'] - df['日期'].min()
     df['日期'] = df['日期'].apply(lambda x: x.days)
     return df.drop(targetKey, axis=1), df[targetKey]
-
 
 
 X, Y = getxy()
