@@ -243,20 +243,20 @@ print('mape', mean_absolute_percentage_error(np.exp(trainY), np.exp(y_pred)))
 # explainerData = explainerData[:1000]
 # explainer = shap.DeepExplainer(model, explainerData)
 # shap_values = explainer.shap_values(explainerData)
-
-# plt.figure(figsize=(8, 6))
-# shap.plots.waterfall(shap_values[0][:, 0, :], show=False)
-# plt.tight_layout()
-# plt.savefig('灵敏度瀑布图.svg')
-# plt.show()
 #
-# plt.figure(figsize=(8, 6))
-# shap.plots.bar(shap_values, show=False)
-# plt.tight_layout()
-# plt.savefig('灵敏度条形图.svg')
-# plt.show()
-
-
+# # plt.figure(figsize=(8, 6))
+# # shap.plots.waterfall(shap_values[0][:, 0, :], show=False)
+# # plt.tight_layout()
+# # plt.savefig('灵敏度瀑布图.svg')
+# # plt.show()
+# #
+# # plt.figure(figsize=(8, 6))
+# # shap.plots.bar(shap_values, show=False)
+# # plt.tight_layout()
+# # plt.savefig('灵敏度条形图.svg')
+# # plt.show()
+#
+#
 # plt.figure(figsize=(16, 9))
 # shap.summary_plot(shap_values[0][:, 0, :], explainerData[:][:, 0, :], data.columns, show=False, )
 # plt.tight_layout()
