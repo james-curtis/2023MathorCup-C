@@ -48,7 +48,8 @@ plt.rcParams['axes.unicode_minus'] = False  # 解决无法显示符号的问题
 palette = 'deep'
 sns.set(font='SimHei', font_scale=1.2, style='whitegrid', palette=palette)  # 解决Seaborn中文显示问题
 
-rawData = pd.read_excel('../../../原始数据/附件1：物流网络历史货量数据.xlsx')
+rawData = pd.read_excel('../../../preprocess/左侧填充-物流网络历史货量数据.xlsx')
+rawData = pd.melt(rawData, id_vars=['场地1', '场地2'], value_name='货量', var_name='日期')
 
 filterSize = 5
 
