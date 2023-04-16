@@ -1,1 +1,0 @@
-{'Algorithm Name': 'SGA', 'Algorithm MAXGEN': 9999, 'Algorithm MAXTIME': None, 'Algorithm MAXEVALS': None, 'Algorithm trappedValue': 1e-06, 'Algorithm maxTrappedCount': 1000}
