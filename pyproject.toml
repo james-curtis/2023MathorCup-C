@@ -21,6 +21,10 @@ statsmodels = "^0.14.0"
 tensorflow-io-gcs-filesystem = "0.31.0"
 tensorflow = "2.10.0"
 
+[[tool.poetry.source]]
+name = "mirrors"
+url = "https://mirror.nju.edu.cn/pypi/web/simple/"
+priority = "default"
 
 [build-system]
 requires = ["poetry-core"]
